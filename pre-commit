@@ -1,0 +1,22 @@
+#!/bin/sh
+
+SCRIPT_PATH="check-credentials.py"
+
+# Find all staged files, and run them through the Python script
+FILES=$(git diff --cached --name-only --diff-filter=ACM)
+if [ -z "$FILES" ]; then
+    exit 0
+fi
+
+# Execute Python script on staged files
+python3 "$SCRIPT_PATH" $FILES
+RETVAL=$?
+
+# If the Python script exits with non-zero, the commit is blocked
+if [ $RETVAL -ne 0 ]; then
+    echo "Commit aborted due to possible credentials in the code."
+    exit 1
+fi
+
+# Exit normally if no credentials are found
+exit 0
