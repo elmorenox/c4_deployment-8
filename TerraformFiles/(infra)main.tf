@@ -121,7 +121,7 @@ resource "aws_ecs_task_definition" "frontend_task" {
   container_definitions = jsonencode([
     {
       name  = "frontend-container"
-      image = "your_registry/frontend:latest" # Replace with your Docker image repository URL
+      image = "kha1i1/deployment8:FE_image"
       
       # Commands to run inside the container
       command = [
