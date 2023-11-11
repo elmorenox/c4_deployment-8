@@ -1,0 +1,20 @@
+# Used Node.js runtime as a base image
+FROM node:10
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Clone Git repo into the container
+RUN git clone https://github.com/elmorenox/c4_deployment-8.git
+
+# Change the working directory to the 'frontend' folder
+WORKDIR /app/c4_deployment-8/frontend
+
+# Install Node.js dependencies
+RUN npm install
+
+# Expose port 3000 for the Node.js application
+EXPOSE 3000
+
+# Start the Node.js application
+CMD ["npm", "start"]

@@ -1,0 +1,23 @@
+# Python runtime as a base image
+FROM python:3.9
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Clone Github repo into the container
+RUN git clone https://github.com/elmorenox/c4_deployment-8.git
+
+# Change the working directory to the 'backend' folder
+WORKDIR /app/c4_deployment-8/backend
+
+# Install the Python dependencies from requirements.txt
+RUN pip install -r requirements.txt
+
+# Run the Django database migration
+RUN python manage.py migrate
+
+# Expose port 8000 for the Django development server
+EXPOSE 8000
+
+# Start the Django development server 
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
