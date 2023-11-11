@@ -30,3 +30,18 @@ resource "aws_ecs_task_definition" "backend_task" {
     }
   ])
 }
+
+
+# ECS Service for Backend
+resource "aws_ecs_service" "backend_service" {
+  name            = "backend-service"
+  cluster         = aws_ecs_cluster.aws-ecs-cluster.id
+  task_definition = aws_ecs_task_definition.backend_task.arn
+  launch_type     = "FARGATE"
+  desired_count   = 1
+
+  network_configuration {
+    subnets = aws_subnet.public_subnets[*].id
+    security_groups = [aws_security_group.ecs_security_group.id]
+  }
+}

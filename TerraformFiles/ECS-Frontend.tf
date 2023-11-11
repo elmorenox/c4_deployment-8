@@ -9,6 +9,8 @@ resource "aws_ecs_task_definition" "frontend_task" {
   task_role_arn            = "arn:aws:iam::896099932731:role/ecstaskExecutionrole"
 
 
+
+
   container_definitions = jsonencode([
     {
       name  = "frontend-container"
@@ -28,4 +30,20 @@ resource "aws_ecs_task_definition" "frontend_task" {
       ]
     }
   ])
+}
+
+# ECS Service for Frontend
+resource "aws_ecs_service" "frontend_service" {
+  name            = "frontend-service"
+  cluster         = aws_ecs_cluster.aws-ecs-cluster.id
+  task_definition = aws_ecs_task_definition.frontend_task.arn
+  launch_type     = "FARGATE"
+  desired_count   = 2
+
+  network_configuration {
+    subnets = aws_subnet.public_subnets[*].id
+    security_groups = [aws_security_group.ecs_security_group.id]
+  }
+  
+  depends_on = [aws_lb_target_group.dep8_frontend]
 }

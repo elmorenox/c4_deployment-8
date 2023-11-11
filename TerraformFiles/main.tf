@@ -39,15 +39,15 @@ resource "aws_lb" "dep8_alb" {
   depends_on = [aws_internet_gateway.D8Gateway]
 }
 
-# ALB Listener for Backend
-resource "aws_lb_listener" "backend_listener" {
+# ALB Listener for frontend
+resource "aws_lb_listener" "frontend_listener" {
   load_balancer_arn = aws_lb.dep8_alb.arn
-  port              = 8000
+  port              = 3000
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.backend.arn
+    target_group_arn = aws_lb_target_group.frontend.arn
   }
 }
 
