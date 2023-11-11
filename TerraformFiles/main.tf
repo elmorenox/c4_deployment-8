@@ -5,17 +5,17 @@ provider "aws" {
   region = "us-east-1"  
 }
 
-# Target Group for Backend
-resource "aws_lb_target_group" "backend" {
-  name        = "dep8-backend-app"
-  port        = 8000
+# Target Group for Frontend
+resource "aws_lb_target_group" "frontend" {
+  name        = "dep8-frontend-app"
+  port        = 3000
   protocol    = "HTTP"
   target_type = "ip"
   vpc_id      = aws_vpc.dep8_vpc.id
 
   health_check {
     enabled = true
-    path    = "/health"
+    path    = "/"
   }
 
   depends_on = [aws_lb.dep8_alb]
