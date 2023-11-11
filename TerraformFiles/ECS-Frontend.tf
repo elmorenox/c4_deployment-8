@@ -1,4 +1,5 @@
 # ECS task definition for frontend
+/*
 resource "aws_ecs_task_definition" "frontend_task" {
   family                   = "frontend"
   network_mode             = "awsvpc"
@@ -9,28 +10,29 @@ resource "aws_ecs_task_definition" "frontend_task" {
   task_role_arn            = "arn:aws:iam::896099932731:role/ecstaskExecutionrole"
 
 
-
-
-  container_definitions = jsonencode([
-    {
-      name  = "frontend-container"
-      image = "your_registry/frontend:latest" # Replace with your Docker image repository URL
-      
-      # Commands to run inside the container
-      command = [
-        "npm",
-        "start"
-      ]
-
-      # Expose the container port
-      portMappings = [
+  container_definitions = <<EOF
+  [
+  {
+      "name": "d8_frontend_container",
+      "image": kha1i1/deployment8:FE_image,",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/dep8-logs",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
         {
-          containerPort = 3000
+          "containerPort": 3000
         }
       ]
     }
-  ])
+  ]
+  EOF
 }
+
 
 # ECS Service for Frontend
 resource "aws_ecs_service" "frontend_service" {
@@ -45,5 +47,6 @@ resource "aws_ecs_service" "frontend_service" {
     security_groups = [aws_security_group.ecs_security_group.id]
   }
   
-  depends_on = [aws_lb_target_group.dep8_frontend]
+  depends_on = [aws_lb_target_group.frontend]
 }
+*/

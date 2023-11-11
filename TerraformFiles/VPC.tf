@@ -1,6 +1,6 @@
 # Create a VPC
 resource "aws_vpc" "dep8_vpc" {
-  cidr_block = "10.0.0.0/16"  # Specify your desired CIDR block
+  cidr_block = "172.28.0.0/16"  
 }
 
 # Defines two specific subnets in us-east-1a and us-east-1b
@@ -13,6 +13,7 @@ resource "aws_subnet" "public_subnets" {
     Name = "Dep8Subnets"
   }
 }
+
 ###INTERNETGATEWAY###
 resource "aws_internet_gateway" "D8Gateway" {
   vpc_id = aws_vpc.dep8_vpc.id

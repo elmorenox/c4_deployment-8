@@ -9,28 +9,28 @@ resource "aws_ecs_task_definition" "backend_task" {
   task_role_arn            = "arn:aws:iam::896099932731:role/ecstaskExecutionrole"
 
 
-  container_definitions = jsonencode([
-    {
-      name  = "backend-container"
-      image = "kha1i1/deployment8:BEimage"
-      
-      # Commands to run inside the container
-      command = [
-        "python",
-        "manage.py",
-        "migrate"
-      ]
-
-      # Expose the container port
-      portMappings = [
+  container_definitions = <<EOF
+  [
+  {
+      "name": "d8_frontend_container",
+      "image": kha1i1/deployment8:BE_image,",
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/dep8-logs",
+          "awslogs-region": "us-east-1",
+          "awslogs-stream-prefix": "ecs"
+        }
+      },
+      "portMappings": [
         {
-          containerPort = 8000
+          "containerPort": 8000
         }
       ]
     }
-  ])
+  ]
+  EOF
 }
-
 
 # ECS Service for Backend
 resource "aws_ecs_service" "backend_service" {
