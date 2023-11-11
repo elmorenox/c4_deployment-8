@@ -4,7 +4,7 @@ FROM python:3.9
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone your Git repo into the container
+# Clone Github repo into the container
 RUN git clone https://github.com/elmorenox/c4_deployment-8.git
 
 # Change the working directory to the 'backend' folder
