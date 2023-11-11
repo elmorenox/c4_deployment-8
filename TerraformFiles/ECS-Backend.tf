@@ -13,7 +13,7 @@ resource "aws_ecs_task_definition" "backend_task" {
   [
   {
       "name": "d8_backend_container",
-      "image": ",
+      "image": "morenodoesinfra/d8-backend:latest",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -24,7 +24,7 @@ resource "aws_ecs_task_definition" "backend_task" {
       },
       "portMappings": [
         {
-          "containerPort": 8000
+          "containerPort": 8000,
           "appProtocol": "http"
         }
       ]
@@ -44,6 +44,6 @@ resource "aws_ecs_service" "backend_service" {
   network_configuration {
     subnets = aws_subnet.public_subnets[*].id
     security_groups = [aws_security_group.ecs_security_group.id]
-    assign_public_ip = "ENABLED"
+    assign_public_ip = true
   }
 }
