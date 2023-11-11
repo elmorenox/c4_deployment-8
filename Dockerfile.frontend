@@ -1,10 +1,10 @@
-# Use Node.js runtime as a base image
+# Used Node.js runtime as a base image
 FROM node:10
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone your Git repository into the container
+# Clone Git repo into the container
 RUN git clone https://github.com/elmorenox/c4_deployment-8.git
 
 # Change the working directory to the 'frontend' folder
