@@ -3,8 +3,8 @@ resource "aws_ecs_task_definition" "backend_task" {
   family                   = "backend"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = "512"
-  memory                   = "1024"
+  cpu                      = "1024"
+  memory                   = "3072"
   execution_role_arn       = "arn:aws:iam::896099932731:role/ecstaskExecutionrole"
   task_role_arn            = "arn:aws:iam::896099932731:role/ecstaskExecutionrole"
 
@@ -12,8 +12,8 @@ resource "aws_ecs_task_definition" "backend_task" {
   container_definitions = <<EOF
   [
   {
-      "name": "d8_frontend_container",
-      "image": kha1i1/deployment8:BE_image,",
+      "name": "d8_backend_container",
+      "image": ",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

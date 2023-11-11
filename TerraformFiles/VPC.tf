@@ -40,6 +40,10 @@ resource "aws_route" "internet_gateway_route" {
   gateway_id             = aws_internet_gateway.D8Gateway.id
 }
 
+resource "aws_eip" "elastic-ip" {
+  domain = "vpc"
+}
+
   # Create route table
 resource "aws_route_table" "dep8_route_table" {
   vpc_id = aws_vpc.dep8_vpc.id
@@ -91,6 +95,13 @@ resource "aws_security_group" "ecs_security_group" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }

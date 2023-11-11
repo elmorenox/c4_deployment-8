@@ -5,7 +5,7 @@ provider "aws" {
   region = "us-east-1"  
 }
 
-/*
+
 # Target Group for Frontend
 resource "aws_lb_target_group" "frontend" {
   name        = "dep8-frontend-app"
@@ -55,4 +55,3 @@ resource "aws_lb_listener" "frontend_listener" {
 output "alb_url" {
   value = "http://${aws_lb.dep8_alb.dns_name}"
 }
-*/

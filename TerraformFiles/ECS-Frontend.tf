@@ -1,5 +1,5 @@
 # ECS task definition for frontend
-/*
+
 resource "aws_ecs_task_definition" "frontend_task" {
   family                   = "frontend"
   network_mode             = "awsvpc"
@@ -49,4 +49,3 @@ resource "aws_ecs_service" "frontend_service" {
   
   depends_on = [aws_lb_target_group.frontend]
 }
-*/
