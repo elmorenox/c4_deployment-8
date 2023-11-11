@@ -1,10 +1,10 @@
-# Use an official Python runtime as a base image
+# Python runtime as a base image
 FROM python:3.9
 
 # Set the working directory in the container
 WORKDIR /app
 
-# Clone your Git repository into the container
+# Clone your Git repo into the container
 RUN git clone https://github.com/elmorenox/c4_deployment-8.git
 
 # Change the working directory to the 'backend' folder
@@ -19,5 +19,5 @@ RUN python manage.py migrate
 # Expose port 8000 for the Django development server
 EXPOSE 8000
 
-# Start the Django development server with 0.0.0.0:8000
+# Start the Django development server 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
