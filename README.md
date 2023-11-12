@@ -86,15 +86,15 @@ Set up a Jenkins manager and agent architecture with the following instances:
 
 Instance 1:
 - Jenkins with Docker pipeline plugin
-  
+ [JenkinsManagerInstall.sh](Bash-Scripts/JenkinsManagerInstall.sh) 
 Instance 2 (T.2 medium):
 - Docker
 - Default-jre
-
+[DockerInstall.sh](Bash-Scripts/DockerInstall.sh)
 Instance 3:
 - Terraform
 - Default-jre
-
+[TerraformInstall.sh](Bash-Scripts/TerraformInstall.sh)
 ### Step 3: ECS and VPC Terraform Files
 Create Terraform files for ECS and VPC with the specified components:
 - 2 AZ's
