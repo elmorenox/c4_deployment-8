@@ -4,7 +4,18 @@
 This documentation provides an overview of deploying an E-commerce application stack. The deployment involves creating a Python script for sensitive information detection, setting up a Jenkins manager and agent architecture, and creating Terraform files for ECS and VPC. Additionally, Docker images for both the backend and frontend are created, and Jenkinsfiles are used to automate the deployment process.
 
 ## Issues
+- **Error during ECS Task Definition Creation:**
+  - Description: Encountered an issue creating the ECS Task Definition for the backend.
+  - Resolution: Identified a problem with the IAM roles. Updated roles in the Terraform files to resolve the issue.
 
+- **ALB Configuration:**
+  - Description: Initially, the ALB did not have a listener configuration.
+  - Resolution: Added an ALB listener in the Terraform configuration to properly route traffic.
+
+- **Missing Service Definitions:**
+  - Description: The Terraform files lacked service definitions for ECS.
+  - Resolution: Added service definitions for backend and frontend ECS tasks to manage the deployment.
+    
 ## System Diagram
 
 ### Step 1: Sensitive Information Detection Script
