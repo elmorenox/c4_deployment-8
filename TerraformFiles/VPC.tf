@@ -1,6 +1,6 @@
 # Create a VPC
 resource "aws_vpc" "dep8_vpc" {
-  cidr_block = "10.0.0.0/16"  # Specify your desired CIDR block
+  cidr_block = "172.28.0.0/16"  
 }
 
 # Defines two specific subnets in us-east-1a and us-east-1b
@@ -13,6 +13,7 @@ resource "aws_subnet" "public_subnets" {
     Name = "Dep8Subnets"
   }
 }
+
 ###INTERNETGATEWAY###
 resource "aws_internet_gateway" "D8Gateway" {
   vpc_id = aws_vpc.dep8_vpc.id
@@ -37,6 +38,10 @@ resource "aws_route" "internet_gateway_route" {
   route_table_id         = aws_route_table.dep8_route_table.id
   destination_cidr_block = "0.0.0.0/0" # Default route for internet
   gateway_id             = aws_internet_gateway.D8Gateway.id
+}
+
+resource "aws_eip" "elastic-ip" {
+  domain = "vpc"
 }
 
   # Create route table
@@ -90,6 +95,13 @@ resource "aws_security_group" "ecs_security_group" {
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
