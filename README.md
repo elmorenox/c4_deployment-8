@@ -311,9 +311,6 @@ insert code here
 ### Step 7: Application Stack and API Server
 The application stack consists of a Python Django backend and Node, React frontend deployed on a VPC hosting an ECS with an ALB. The backend serves as an API server running on port 8000.
 
-### Conclusion
-By following these steps, you will have successfully deployed the application stack using Terraform, Docker, and Jenkins. The Jenkins manager-agent architecture ensures automation in the deployment process, and the sensitive information detection script helps maintain security by preventing the inclusion of sensitive information in the GitHub repository.
-
 ### Step 8:
 
 Backend API:
@@ -321,6 +318,15 @@ Backend API:
 
 Frontend App, ALB:
 ![Frontend](Deployment8Images/loadbalancedfe.png)
+
+Task Status:
+![image](Deployment8Images/ServiceStatus.png)
+
+VPC Infrastructure Resource Map:
+![image](Deployment8Images/VPC-ResourceMap.png)
+
+### Conclusion
+By following these steps, you will have successfully deployed the application stack using Terraform, Docker, and Jenkins. The Jenkins manager-agent architecture ensures automation in the deployment process, and the sensitive information detection script helps maintain security by preventing the inclusion of sensitive information in the GitHub repository.
 
 
 
