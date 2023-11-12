@@ -71,9 +71,11 @@ Set up a Jenkins manager and agent architecture with the following instances:
 
 Instance 1:
 - Jenkins with Docker pipeline plugin
+  
 Instance 2 (T.2 medium):
 - Docker
 - Default-jre
+
 Instance 3:
 - Terraform
 - Default-jre
