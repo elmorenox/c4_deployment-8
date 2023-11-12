@@ -9,13 +9,13 @@ pipeline {
         stage ('Test') {
             steps {
                 sh '''#!/bin/bash
-                python3.7 -m venv test
+                python3.9 -m venv test
                 source test/bin/activate
                 pip install pip --upgrade
                 pip install -r requirements.txt
                 pip install mysqlclient
                 pip install pytest
-                py.test --verbose --junit-xml test-reports/results.xml
+                py.test --verbose --junit-xml test-reports/results.xml /backend/account/tests.py /backend/product/tests.py
                 '''
             }
             post {
