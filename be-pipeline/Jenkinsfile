@@ -36,7 +36,7 @@ pipeline {
         }
         stage ('Push') {
             steps {
-                sh 'docker push kha1i1/d8-backend:latest'
+                sh 'docker push morenodoesinfra/d8-backend:latest'
             }
         }
         stage ('Terraform') {
