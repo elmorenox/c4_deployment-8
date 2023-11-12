@@ -8,15 +8,7 @@ pipeline {
     stages {
         stage ('Test') {
             steps {
-                sh '''#!/bin/bash
-                python3.7 -m venv test
-                source test/bin/activate
-                pip install pip --upgrade
-                pip install -r requirements.txt
-                pip install mysqlclient
-                pip install pytest
-                py.test --verbose --junit-xml test-reports/results.xml
-                '''
+                
             }
             post {
                 always {
@@ -26,7 +18,7 @@ pipeline {
         }
         stage ('Build') {
             steps {
-                sh 'docker build -t kha1i1/d8-backend:latest -f Dockerfile.backend .
+                sh 'docker build -t morenodoesinfra/d8-frontend:latest -f Dockerfile.frontend .
             }
         }
         stage ('Login') {
@@ -36,7 +28,7 @@ pipeline {
         }
         stage ('Push') {
             steps {
-                sh 'docker push kha1i1/d8-backend:latest'
+                sh 'docker push morenodoesinfra/d8-frontend'
             }
         }
         stage ('Terraform') {

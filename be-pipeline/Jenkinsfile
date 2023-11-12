@@ -12,7 +12,7 @@ pipeline {
                 python3.9 -m venv test
                 source test/bin/activate
                 pip install pip --upgrade
-                pip install -r requirements.txt
+                pip install -r /backend/requirements.txt
                 pip install mysqlclient
                 pip install pytest
                 py.test --verbose --junit-xml test-reports/results.xml /backend/account/tests.py /backend/product/tests.py
