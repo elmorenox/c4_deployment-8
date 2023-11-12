@@ -81,6 +81,11 @@ Instance 3:
 - Default-jre
 
 ### Step 3: ECS and VPC Terraform Files
+[main.tf](TerraformFiles/main.tf)
+[VPC.tf](TerraformFiles/VPC.tf)
+[ECS-Frontend.tf](TerraformFiles/ECS-Frontend.tf)
+[ECS-Backend.tf](TerraformFiles/ECS-Backend.tf)
+
 Create Terraform files for ECS and VPC with the specified components:
 - 2 AZ's
 - 2 Public Subnets
@@ -156,3 +161,10 @@ insert code here
 
 ### Step 7: Application Stack and API Server
 The application stack consists of a backend and frontend deployed on ECS with an ALB. The backend serves as an API server running on port 8000.
+
+Conclusion
+By following these steps, you will have successfully deployed the application stack using Terraform, Docker, and Jenkins. The Jenkins manager-agent architecture ensures automation in the deployment process, and the sensitive information detection script helps maintain security by preventing the inclusion of sensitive information in the GitHub repository.
+
+
+
+
