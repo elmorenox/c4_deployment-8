@@ -5,7 +5,6 @@ This documentation provides an overview of deploying an E-commerce application s
 
 ## Issues
 
-![image](Deployment8Images/docker-error.png)
 - **Error during ECS Task Definition Creation:**
   - Description: Encountered an issue creating the ECS Task Definition for the backend.
   - Resolution: Identified a problem with the IAM roles. Updated roles in the Terraform files to resolve the issue.
@@ -17,6 +16,11 @@ This documentation provides an overview of deploying an E-commerce application s
 - **Missing Service Definitions:**
   - Description: The Terraform files lacked service definitions for ECS.
   - Resolution: Added service definitions for backend and frontend ECS tasks to manage the deployment.
+ 
+- **Missing a public IP for services**
+  - Description: Tasks were failing because Docker images could not be pulled
+  - Resolution: Assing public ip to services.
+  - ![image](Deployment8Images/docker-error.png)
     
 ## System Diagram
 ![image](Deployment8Images/dep8-diagram.png)
@@ -301,10 +305,20 @@ insert code here
 ```
 
 ### Step 7: Application Stack and API Server
-The application stack consists of a backend and frontend deployed on ECS with an ALB. The backend serves as an API server running on port 8000.
+The application stack consists of a Python Django backend and Node, React frontend deployed on a VPC hosting an ECS with an ALB. The backend serves as an API server running on port 8000.
 
 ### Conclusion
 By following these steps, you will have successfully deployed the application stack using Terraform, Docker, and Jenkins. The Jenkins manager-agent architecture ensures automation in the deployment process, and the sensitive information detection script helps maintain security by preventing the inclusion of sensitive information in the GitHub repository.
+
+### Step 8:
+
+Backend API:
+![Backend](Deployment8Images/backendscreenshot.png)
+
+Frontend App, ALB:
+![Frontend](Deployment8Images/loadbalancedfe.png)
+
+
 
 
 
