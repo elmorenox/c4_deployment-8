@@ -1,0 +1,120 @@
+pipeline {
+    agent {
+        label 'test-build'
+    }
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('kha1i1-dockerhub')
+    }
+    stages {
+        stage ('Test') {
+            steps {
+                sh '''#!/bin/bash
+                python3.7 -m venv test
+                source test/bin/activate
+                pip install pip --upgrade
+                pip install -r requirements.txt
+                pip install mysqlclient
+                pip install pytest
+                py.test --verbose --junit-xml test-reports/results.xml
+                '''
+            }
+            post {
+                always {
+                    junit 'test-reports/results.xml'
+                }
+            }
+        }
+        stage ('Build') {
+            steps {
+                sh 'docker build -t kha1i1/d8-backend:latest -f Dockerfile.backend .
+            }
+        }
+        stage ('Login') {
+            steps {
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
+        stage ('Push') {
+            steps {
+                sh 'docker push kha1i1/d8-backend:latest'
+            }
+        }
+        stage ('Terraform') {
+            when {
+                branch 'main'
+            }
+            stages 
+                stage('Init') {
+                    agent {
+                        label 'terraform'
+                    }
+                    steps {
+                        withCredentials([
+                            string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
+                            string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
+                        ]) {
+                            dir('intTerraform') {
+                                sh 'terraform init' 
+                            }
+                        }
+                    }
+                }
+                stage('Plan') {
+                    agent {
+                        label 'terraform'
+                    }
+                    steps {
+                        withCredentials([
+                            string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
+                            string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
+                        ]) {
+                            dir('intTerraform') {
+                                sh 'terraform plan -out plan.tfplan -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"' 
+                            }
+                        }
+                    }
+                }
+                stage('Apply') {
+                    agent {
+                        label 'terraform'
+                    }
+                    steps {
+                        withCredentials([
+                            string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'), 
+                            string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
+                        ]) {
+                            dir('intTerraform') {
+                                sh 'terraform apply plan.tfplan' 
+                            }
+                        }
+                    }
+                } 
+                stage('Destroy') {
+                    agent {
+                        label 'terraform'
+                    }
+                    steps {
+                        script {
+                            def user_response = input(
+                                id: 'user_response', message: 'Do you want to Destroy?', 
+                                parameters: [booleanParam(defaultValue: true, description: 'Check to destroy', name: 'destroy')]
+                            )
+                            if (user_response == true) {
+                                withCredentials([
+                                    string(credentialsId: 'AWS_ACCESS_KEY', variable: 'aws_access_key'),
+                                    string(credentialsId: 'AWS_SECRET_KEY', variable: 'aws_secret_key')
+                                ]) {
+                                    dir('intTerraform') {
+                                        sh 'terraform destroy -auto-approve -var="aws_access_key=$aws_access_key" -var="aws_secret_key=$aws_secret_key"'
+                                    }
+                                }
+                            } else {
+                                echo 'Skipping Destroy'
+                            }
+                        }  
+                    }
+                }
+            }
+        }
+    }
+}
