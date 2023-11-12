@@ -81,12 +81,13 @@ Instance 3:
 - Default-jre
 
 ### Step 3: ECS and VPC Terraform Files
+Create Terraform files for ECS and VPC with the specified components:
 - [main.tf](TerraformFiles/main.tf)
 - [VPC.tf](TerraformFiles/VPC.tf)
 - [ECS-Frontend.tf](TerraformFiles/ECS-Frontend.tf)
 - [ECS-Backend.tf](TerraformFiles/ECS-Backend.tf)
 
-Create Terraform files for ECS and VPC with the specified components:
+
 - 2 AZ's
 - 2 Public Subnets
 - 2 Containers for the frontend
