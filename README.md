@@ -1,4 +1,8 @@
 # Automated Terraform Deployment Documentation
+Authors:
+- System Administrator: Khalil 
+- Project Manager: Luis
+- Chief Architect: Ethan
 
 ## Purpose
 This documentation provides an overview of deploying an E-commerce application stack. The deployment involves creating a Python script for sensitive information detection, setting up a Jenkins manager and agent architecture, and creating Terraform files for ECS and VPC. Additionally, Docker images for both the backend and frontend are created, and Jenkinsfiles are used to automate the deployment process.
@@ -23,7 +27,7 @@ This documentation provides an overview of deploying an E-commerce application s
   - ![image](Deployment8Images/docker-error.png)
     
 ## System Diagram
-![image](Deployment8Images/dep8-diagram.png)
+![image](Deployment8Images/dep8-diagramv2.png)
 
 
 ### Step 1: Sensitive Information Detection Script
