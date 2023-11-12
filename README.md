@@ -17,9 +17,11 @@ This documentation provides an overview of deploying an E-commerce application s
   - Resolution: Added service definitions for backend and frontend ECS tasks to manage the deployment.
     
 ## System Diagram
+![image](Deployment8Images/dep8-diagram.png)
+
 
 ### Step 1: Sensitive Information Detection Script
-
+We created the Python Script and initial terraform files on an existing EC2 instance set up on a default VPC.
 ``` 
 #!/usr/bin/python3
 
