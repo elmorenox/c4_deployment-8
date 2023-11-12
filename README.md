@@ -66,7 +66,9 @@ if __name__ == "__main__":
 
 ### Step 2: Jenkins Manager and Agent Architecture
 Set up a Jenkins manager and agent architecture with the following instances:
+
 [(Working-Enviroment)main.tf](JenkinsTF/(Working-Enviroment)main.tf)
+
 Instance 1:
 - Jenkins with Docker pipeline plugin
 Instance 2 (T.2 medium):
