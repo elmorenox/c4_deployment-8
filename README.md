@@ -82,12 +82,6 @@ Instance 3:
 
 ### Step 3: ECS and VPC Terraform Files
 Create Terraform files for ECS and VPC with the specified components:
-- [main.tf](TerraformFiles/main.tf)
-- [VPC.tf](TerraformFiles/VPC.tf)
-- [ECS-Frontend.tf](TerraformFiles/ECS-Frontend.tf)
-- [ECS-Backend.tf](TerraformFiles/ECS-Backend.tf)
-
-
 - 2 AZ's
 - 2 Public Subnets
 - 2 Containers for the frontend
@@ -95,6 +89,12 @@ Create Terraform files for ECS and VPC with the specified components:
 - 1 Route Table
 - Security Group Ports: 8000, 3000, 80
 - 1 ALB
+
+Terraform Files:
+- [main.tf](TerraformFiles/main.tf)
+- [VPC.tf](TerraformFiles/VPC.tf)
+- [ECS-Frontend.tf](TerraformFiles/ECS-Frontend.tf)
+- [ECS-Backend.tf](TerraformFiles/ECS-Backend.tf)
 
 ### Step 4: Backend Docker Image
 Create a Docker image for the backend on a T.2 medium using the following steps:
