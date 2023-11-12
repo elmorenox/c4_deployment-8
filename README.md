@@ -1,27 +1,63 @@
-<p align="center">
-<img src="https://github.com/kura-labs-org/kuralabs_deployment_1/blob/main/Kuralogo.png">
-</p>
-<h1 align="center">C4_deployment-8<h1> 
+# Automated Terraform Deployment Documentation
 
-Demonstrate your ability to work within a group to deploy an e-commerce application to ECS.
+## Purpose
+This documentation provides an overview of deploying an E-commerce application stack. The deployment involves creating a Python script for sensitive information detection, setting up a Jenkins manager and agent architecture, and creating Terraform files for ECS and VPC. Additionally, Docker images for both the backend and frontend are created, and Jenkinsfiles are used to automate the deployment process.
 
-- Create a separate GitHub repository for this application 
+## Issues
+## System Diagram
 
-- Download the files from this repository and upload them to your newly created repository 
+### Step 1: Sensitive Information Detection Script
+``` 
+#!/usr/bin/python3
 
-- Be sure to follow the deployment instructions from this repository  
+import logging
+import sys
+import re
 
-- Document your progress in a .md file in your repository. Also, document any issues you may run into and what you did to fix them.
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(" Credential Checker")
 
-- Make sure your documentation includes these sections:
-  - Members of your group and group name
-  - Purpose
-  - Issues
-  - Steps
-  - System Diagram 
-  - Optimization (How would you make this deployment more efficient, if you utilize ChatGPT make sure to explain what your prompt was.)
+patterns = [
+    re.compile(r'(?<!\S)["\']?[0-9a-zA-Z+/]{20}["\']?(?!\S)'),  # Matches any 20 character string with only alphanumeric characters and the characters + and /, optionally enclosed in quotes and directly surrounded by spaces or quotes
+    re.compile(r'(?<!\S)["\']?[0-9a-zA-Z+/]{40}["\']?(?!\S)'),  # Matches any 40 character string with only alphanumeric characters and the characters + and /, optionally enclosed in quotes and directly surrounded by spaces or quotes
+]
 
-- Lastly, save your documentation and diagram into your repository. Submit your repository link to the LMS
 
-## Deployment instructions Link:
--  https://github.com/kura-labs-org/c4_deployment-8/blob/main/Deployment-instructions.md
+def contains_credentials(file_content):
+    for pattern in patterns:
+        if pattern.search(file_content):
+            return True
+    return False
+
+
+def main():
+    exit_code = 0
+    files = sys.argv[1:]
+    for local_file in files:
+        try:
+            with open(local_file, 'r') as f:
+                logger.info(f" Checking {local_file} for credentials \n")
+                file_content = f.read()
+                if contains_credentials(file_content):
+                    logger.warning(
+                        f" Credentials detected in file: {local_file}"
+                    )
+                    exit_code = 1
+                    for pattern in patterns:
+                        matches = pattern.findall(file_content)
+                        for match in matches:
+                            logger.warning(
+                                f" Credentials possible match: {match}"
+                            )
+        except UnicodeDecodeError:
+            pass
+        except FileNotFoundError:
+            logger.error(f"File not found: {local_file}")
+
+    return exit_code  # Return the exit code
+
+
+if __name__ == "__main__":
+    sys.exit(main())
+
+```
