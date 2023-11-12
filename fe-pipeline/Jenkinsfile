@@ -43,7 +43,7 @@ pipeline {
             when {
                 branch 'main'
             }
-            stages 
+            stages { 
                 stage('Init') {
                     agent {
                         label 'terraform'
